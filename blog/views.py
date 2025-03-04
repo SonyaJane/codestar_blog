@@ -19,11 +19,18 @@ def post_detail(request, slug):
 
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
+    comments = post.comments.all().order_by("-created_on")
+    comment_count = post.comments.filter(approved=True).count()
+
     # render puts together the template and the context dictionary and returns an HttpResponse object with that rendered text.
     # The context is a dictionary mapping template variable names to Python objects.
     # When rendering a template, Django replaces variables in the template with values from the context dictionary.
     return render(
         request, # everything we receive from the user via the Internet
         "blog/post_detail.html", # the template we want to render
-        {"post": post, "coder": "Sonya"}, # things we want to pass to the template, in the form of a dictionary
+        {
+            "post": post,
+            "comments": comments,
+            "comment_count": comment_count,
+        }, # things we want to pass to the template, in the form of a dictionary
     )
