@@ -32,7 +32,6 @@ def post_detail(request, slug):
             comment.save()
             messages.add_message(request, messages.SUCCESS, 'Comment submitted and awaiting approval')
 
-
     comment_form = CommentForm()
     
     # render puts together the template and the context dictionary and returns an HttpResponse object with that rendered text.
